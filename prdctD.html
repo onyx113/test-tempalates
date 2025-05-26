@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشخصات محصول - لیورویت</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Vazirmatn', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="max-w-7xl mx-auto p-4">
+
+   
+
+    <!-- عنوان و عکس محصول -->
+    <div class=" flex flex-col md:flex-row bg-white rounded-2xl shadow p-6 mb-6">
+      <!-- گالری تصاویر محصول -->
+<div class="md:w-1/3 mb-4 md:mb-0 flex flex-col items-center">
+  <!-- تصویر اصلی -->
+  <img id="mainImage" onclick="changeImage(this); openModal(this.src)" src="https://darukade.com/_next/image?url=https%3A%2F%2Fstatics.darukade.com%2FImages%2FProducts%2F1213253011220249811.jpg&w=600&q=100"
+       alt="تصویر محصول" class="cursor-pointer rounded-xl w-60 h-auto mb-4 border border-gray-200 shadow-sm transition-all duration-300">
+
+  <!-- تصاویر بندانگشتی -->
+  <div class="flex gap-2 overflow-x-auto">
+    <img onclick="changeImage(this)" src="https://darukade.com/_next/image?url=https%3A%2F%2Fstatics.darukade.com%2FImages%2FProducts%2F1213253011220249811.jpg&w=600&q=100"
+         alt="عکس 1" class="thumbnail w-16 h-16  border cursor-pointer ">
+    <img onclick="changeImage(this)" src="https://darukade.com/_next/image?url=https%3A%2F%2Fstatics.darukade.com%2FImages%2FProducts%2F1213373011220249831.jpg&w=600&q=100"
+         alt="عکس 2" class="thumbnail w-16 h-16  border cursor-pointer ">
+    <img onclick="changeImage(this)" src="https://darukade.com/_next/image?url=https%3A%2F%2Fstatics.darukade.com%2FImages%2FProducts%2F1213333011220249821.jpg&w=600&q=100"
+         alt="عکس 3" class="thumbnail w-16 h-16  border cursor-pointer ">
+  </div>
+</div>
+
+<!-- اسکریپت تعویض تصویر -->
+<script>
+  function changeImage(el) {
+    const mainImg = document.getElementById('mainImage');
+    mainImg.src = el.src;
+    // حذف حالت فعال از همه تصاویر بندانگشتی
+    document.querySelectorAll('.thumbnail').forEach(img => img.classList.remove('ring-2', 'ring-green-500'));
+    
+    
+  }
+</script>
+
+      <div class="md:w-2/3 md:pr-6">
+        <h1 class="text-2xl font-bold text-green-700 mb-2">لیور ویت</h1>
+        <p class="text-sm text-gray-600 mb-2">Euro Vital</p>
+        <p class="text-yellow-500 text-sm mb-2">★ ★ ★ ★ ☆ (34 نظر)</p>
+        <ul class="list-disc pr-5 text-sm space-y-1 text-gray-800">
+          <li>مکمل تغذیه‌ای دارای 30 نوع ماده مغذی و عصاره گیاهی</li>
+          <li>کمک به عملکرد مناسب کبد</li>
+          <li>دارای خواص آنتی‌اکسیدانی</li>
+          <li>حاوی عصاره گیاهانی مانند خار مریم، زردچوبه، چای سبز و...</li>
+          <li>مناسب پاکسازی کبد</li>
+        </ul>
+        <div class="mt-4 text-lg font-semibold text-red-600">
+          
+          ۴۱,۲۰۰ تومان
+        </div>
+        <button class="mt-2 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700">افزودن به سبد خرید</button>
+      </div>
+    </div>
+
+   <!-- تب توضیحات محصول با قابلیت نمایش بیشتر -->
+<div class="bg-white rounded-2xl shadow p-6 mb-6">
+  <h2 class="text-xl font-bold text-green-700 mb-4">معرفی قرص لیور ویت</h2>
+  
+ <div class="w-full  mx-auto mt-8 px-4">
+  <div id="description-wrapper" class="overflow-hidden transition-all duration-500" style="height: 8rem;">
+    <p id="description" class="text-sm text-gray-700 leading-7">
+      قرص لیور ویت یک مکمل تغذیه‌ای حاوی ویتامین‌ها، مواد معدنی، گلوتاتیون، آلفا لیپوئیک اسید و عصاره‌های گیاهی است.
+      این ترکیبات خاصیت آنتی‌اکسیدانی و ضد التهاب داشته و به عملکرد سالم کبد، محافظت در برابر سموم و حمایت از سیستم ایمنی کمک می‌کنند.
+      این مکمل تحت لیسانس Euro OTC Pharma آلمان تولید شده است.
+      <span id="more-text" class="block">
+        مصرف این مکمل برای افرادی که تحت استرس، رژیم غذایی ناسالم یا استفاده از داروهای سنگین هستند، توصیه می‌شود.
+        لیورویت می‌تواند در بهبود فعالیت آنزیم‌های کبدی مؤثر بوده و از آسیب‌های اکسیداتیو جلوگیری کند.
+        همچنین این محصول با دارا بودن ترکیباتی مانند خار مریم و زردچوبه، به سم‌زدایی طبیعی کبد کمک می‌کند.
+      
+        مصرف این مکمل برای افرادی که تحت استرس، رژیم غذایی ناسالم یا استفاده از داروهای سنگین هستند، توصیه می‌شود.
+        لیورویت می‌تواند در بهبود فعالیت آنزیم‌های کبدی مؤثر بوده و از آسیب‌های اکسیداتیو جلوگیری کند.
+        همچنین این محصول با دارا بودن ترکیباتی مانند خار مریم و زردچوبه، به سم‌زدایی طبیعی کبد کمک می‌کند.
+        
+        مصرف این مکمل برای افرادی که تحت استرس، رژیم غذایی ناسالم یا استفاده از داروهای سنگین هستند، توصیه می‌شود.
+        لیورویت می‌تواند در بهبود فعالیت آنزیم‌های کبدی مؤثر بوده و از آسیب‌های اکسیداتیو جلوگیری کند.
+        همچنین این محصول با دارا بودن ترکیباتی مانند خار مریم و زردچوبه، به سم‌زدایی طبیعی کبد کمک می‌کند.
+      
+        مصرف این مکمل برای افرادی که تحت استرس، رژیم غذایی ناسالم یا استفاده از داروهای سنگین هستند، توصیه می‌شود.
+        لیورویت می‌تواند در بهبود فعالیت آنزیم‌های کبدی مؤثر بوده و از آسیب‌های اکسیداتیو جلوگیری کند.
+        همچنین این محصول با دارا بودن ترکیباتی مانند خار مریم و زردچوبه، به سم‌زدایی طبیعی کبد کمک می‌کند.
+      
+      </span>
+    </p>
+  </div>
+   <div class="justify-center flex align-center">
+    <button id="toggle-btn" class="text-green-600 hover:border-b mt-2 text-sm">نمایش بیشتر</button>
+   </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("toggle-btn");
+    const wrapper = document.getElementById("description-wrapper");
+    const content = document.getElementById("description");
+
+    let expanded = false;
+    const collapsedHeight = 128; // = 8rem
+
+    btn.addEventListener("click", () => {
+      if (!expanded) {
+        const fullHeight = content.scrollHeight;
+        wrapper.style.height = fullHeight + "px";
+        btn.textContent = "نمایش کمتر";
+      } else {
+        wrapper.style.height = collapsedHeight + "px";
+        btn.textContent = "نمایش بیشتر";
+      }
+
+      expanded = !expanded;
+    });
+  });
+</script>
+
+
+
+    <!-- مشخصات محصول -->
+    <!-- تب‌های مشخصات محصول -->
+<div class="bg-white rounded-2xl shadow p-6 mt-6">
+  <h3 class="text-lg font-semibold text-green-700 mb-4">مشخصات محصول</h3>
+
+  <!-- دکمه‌های تب -->
+  <div class="flex border-b mb-4 space-x-2 space-x-reverse overflow-x-auto">
+    <button onclick="showTab('specs')" class="tab-btn active-tab">مشخصات</button>
+    <button onclick="showTab('usage')" class="tab-btn">موارد مصرف</button>
+    <button onclick="showTab('storage')" class="tab-btn">شرایط نگهداری</button>
+    <button onclick="showTab('ingredients')" class="tab-btn">ترکیبات</button>
+  </div>
+
+  <!-- محتوای تب‌ها -->
+  <div id="specs" class="tab-content">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800">
+      <div class="flex justify-between border-b pb-1"><span>نوع محصول:</span><span>کپسول</span></div>
+      <div class="flex justify-between border-b pb-1"><span>تعداد در بسته:</span><span>۶۰ عدد</span></div>
+      <div class="flex justify-between border-b pb-1"><span>نوع محفظه:</span><span>جعبه مقوایی</span></div>
+      <div class="flex justify-between border-b pb-1"><span>کشور سازنده:</span><span>ایران</span></div>
+      <div class="flex justify-between border-b pb-1"><span>گروه:</span><span>کبد و صفرا</span></div>
+      <div class="flex justify-between border-b pb-1"><span>تحت لیسانس:</span><span>آلمان</span></div>
+      <div class="flex justify-between border-b pb-1"><span>شرکت سازنده:</span><span>حکیمان طب کار</span></div>
+      <div class="flex justify-between border-b pb-1"><span>وبسایت مرجع:</span><a href="https://www.hakimanteb.com" class="text-blue-600 hover:underline">www.hakimanteb.com</a></div>
+    </div>
+  </div>
+
+  <div id="usage" class="tab-content hidden">
+    <p class="text-sm text-gray-700 leading-6">این محصول جهت کمک به سلامت کبد و تقویت عملکرد آن مصرف می‌شود. پیش از مصرف با پزشک مشورت شود.</p>
+  </div>
+
+  <div id="storage" class="tab-content hidden">
+    <p class="text-sm text-gray-700 leading-6">در جای خشک و خنک، دور از نور مستقیم خورشید و دور از دسترس کودکان نگهداری شود.</p>
+  </div>
+
+  <div id="ingredients" class="tab-content hidden">
+    <p class="text-sm text-gray-700 leading-6">شامل ویتامین‌ها، مواد معدنی، آنتی‌اکسیدان‌ها و عصاره گیاهانی مانند خار مریم، زردچوبه، چای سبز، آلفا لیپوئیک اسید، گلوتاتیون و ...</p>
+  </div>
+</div>
+
+<!-- استایل دکمه تب‌ها -->
+<style>
+  .tab-btn {
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem;
+    color: #4B5563;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover {
+    color: #10B981;
+  }
+  .active-tab {
+    color: #10B981;
+    border-color: #10B981;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  function openModal(src) {
+    const modal = document.getElementById("imageModal");
+    const popupImg = document.getElementById("popupImage");
+    popupImg.src = src;
+    modal.classList.remove("hidden");
+  }
+
+  function closeModal() {
+    document.getElementById("imageModal").classList.add("hidden");
+  }
+</script>
+
+
+<!-- اسکریپت تب -->
+<script>
+  function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active-tab'));
+    document.getElementById(tabId).classList.remove('hidden');
+    event.target.classList.add('active-tab');
+  }
+</script>
+
+
+<!-- بخش نظرات کاربران -->
+<div class="bg-white rounded-2xl shadow p-6 mt-6">
+  <h3 class="text-lg font-semibold text-green-700 mb-4">نظرات کاربران</h3>
+
+  <!-- فرم ارسال نظر -->
+  <form class="space-y-4 mb-6">
+    <div>
+      <label class="block text-sm text-gray-700 mb-1" for="name">نام شما</label>
+      <input type="text" id="name" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700 mb-1" for="comment">نظر شما</label>
+      <textarea id="comment" rows="4" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+    </div>
+    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700">ارسال نظر</button>
+  </form>
+
+  <!-- نظرات نمونه -->
+  <div class="space-y-4">
+    <div class="border-t pt-4">
+      <p class="text-sm font-semibold text-gray-800">سارا</p>
+      <p class="text-sm text-gray-600 mt-1">من چند هفته‌اس دارم استفاده می‌کنم، تاثیر مثبتی روی انرژیم داشته.</p>
+    </div>
+    <div class="border-t pt-4">
+      <p class="text-sm font-semibold text-gray-800">مهدی</p>
+      <p class="text-sm text-gray-600 mt-1">طعم خاصی نداره و استفاده ازش راحته. پیشنهاد می‌کنم.</p>
+    </div>
+    <div class="border-t pt-4">
+      <p class="text-sm font-semibold text-gray-800">الهام</p>
+      <p class="text-sm text-gray-600 mt-1">بسته‌بندیش خوبه و به‌نظر با کیفیت میاد. برای پاکسازی کبد عالیه.</p>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <!-- پاپ‌آپ نمایش تصویر -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+  <img id="popupImage" class="max-w-full max-h-[90vh] rounded-xl shadow-lg border-4 border-white" />
+  <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
+</div>
+
+</body>
+</html>

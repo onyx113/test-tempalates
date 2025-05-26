@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تماس با ما</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            vazir: ['Vazirmatn', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-100 font-vazir">
+
+  <div class="max-w-6xl mx-auto py-12 px-6">
+    <div class=" bg-[linear-gradient(to_right,_#a5e18d_10%,_white_63%)] grid grid-cols-1 md:grid-cols-2 gap-10 bg-white rounded-3xl shadow-2xl overflow-hidden">
+
+      <!-- فرم تماس -->
+      <div class="p-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">فرم تماس با ما</h2>
+        <form class="space-y-5">
+          <textarea class="w-full h-32 p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 resize-none" placeholder="پیام خود را اینجا بنویسید..."></textarea>
+          <input type="text" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500" placeholder="نام و نام خانوادگی" />
+          <input type="tel" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500" placeholder="شماره موبایل" />
+          <input type="email" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500" placeholder="آدرس ایمیل" />
+          <button class="w-full bg-green-600 hover:bg-green-700 transition text-white py-3 rounded-xl text-lg font-bold">
+            ارسال پیام
+          </button>
+        </form>
+      </div>
+
+      <!-- اطلاعات تماس -->
+      <div class=" p-8 flex flex-col justify-between">
+        <div>
+          <h2 class="text-3xl font-bold text-green-700 mb-6 border-b border-gray-300 pb-2">اطلاعات تماس</h2>
+          <ul class="space-y-4 text-gray-700 text-lg">
+            <li class="flex items-start">
+              <svg class="w-6 h-6 ml-2 text-green-600 width="800px height="800px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M607.7 64.2c-102.9 0-186.3 83.4-186.3 186.3 0 30 15.9 66.6 38.3 103.3 15.2 24.8 33.3 49.7 51.7 72.6C559 486 607.7 533 607.7 533s17.7-17.1 42.3-43.8c14-15.3 30.3-33.6 46.7-53.8 47.9-58.7 97.3-132 97.3-184.9 0-102.9-83.4-186.3-186.3-186.3z m77.8 353.2c-8 10-16.1 19.6-23.9 28.6-7.8 9-15.4 17.5-22.5 25.3-12.5 13.7-23.4 25.1-31.4 33.3-12.5-12.8-32.3-33.5-53.8-58.5-7.8-9-15.8-18.5-23.8-28.5-13.5-16.7-25.5-32.7-36.1-48-10.1-14.6-18.8-28.4-26.1-41.5-17.6-31.6-26.6-57.8-26.6-77.8 0-44.4 17.3-86.2 48.7-117.6C521.4 101.3 563.2 84 607.6 84c44.4 0 86.2 17.3 117.6 48.7 31.4 31.4 48.7 73.2 48.7 117.6 0 20-8.9 46.1-26.5 77.6-14.8 26.9-35.6 56.9-61.9 89.5z" fill="#E73B37" /><path d="M607.7 183.1c36.9 0 67 30.1 67 67s-30.1 67-67 67-67-30.1-67-67 30-67 67-67m0-20c-48 0-87 38.9-87 87 0 48 38.9 87 87 87 48 0 87-38.9 87-87s-39-87-87-87z" fill="#E73B37" /><path d="M927.9 352.4l-195.7 70.3-35.6 12.8c-16.4 20.1-32.7 38.5-46.7 53.8l1.9 0.9v416.6l-12.7-5.9-46.3-21.6-212.2-98.9-8.6-4v-415l139.4 65c-18.4-23-36.5-47.8-51.7-72.6l-77.6-36.2-3.7-1.7-8.6-4-7.8-3.7-2.2 0.8L64 415.3v511.8L362 820l230.8 107.6 46.3 21.6 22.7 10.6L960 852.7V340.9l-32.1 11.5zM352 776.9l-4.9 1.8L108 864.6V446.2l244-87.7v418.4z m564 44.9l-244.2 87.7V491.1l5.1-1.8L916 403.4v418.4z" fill="#39393A"/>
+              </svg>
+              تهران، خیابان جلال‌آل‌احمد، فروشگاه مرکزی
+            </li>
+            <li class="flex items-center">
+              <svg class="w-6 h-6 ml-2 text-green-600 width="800px height="800px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M517.8 811c17.1 0 31 13.9 31 30.9 0 17.1-13.9 30.9-31 30.9s-31-13.9-31-30.9 13.9-30.9 31-30.9m0-20c-28.1 0-51 22.8-51 50.9 0 28.1 22.8 50.9 51 50.9s51-22.8 51-50.9c-0.1-28.1-22.9-50.9-51-50.9zM334.218 304.477l65.69-65.69 14.142 14.143-65.69 65.69zM352.086 387.799L483.253 256.63l14.142 14.142-131.167 131.168z" fill="#E73B37" /><path d="M808 108.4v807.2H216V108.4h592m44-44H172v895.2h680V64.4z" fill="#39393A" /><path d="M747.1 173.4v572.9H279.9V173.4h467.2m22-22H257.9v616.9h511.2V151.4z" fill="#39393A" />
+              </svg>
+              تلفن: 021-88247000 / 021-88247001
+            </li>
+            <li class="flex items-center">
+              <svg class="w-6 h-6 ml-2 text-green-600" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M512 599.6L107.9 311.1v19.7L512 619.3l404.1-288.6V311L512 599.6z" fill="#E73B37"></path><path d="M63.9 187v650h896.2V187H63.9z m852.2 598.5L672.2 611.3l-13.8 9.8L899.1 793H125.5l240.6-171.8-13.8-9.8-244.4 174.5V231h808.2v554.5z" fill="#39393A"></path><path d="M512.9 536.7m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="#E73B37"></path></g></svg>
+              ایمیل: <a href="mailto:info@darukade.com" class="text-green-700 hover:underline">info@darukade.com</a>
+            </li>
+            <li class="flex items-center">
+              <svg class="w-6 h-6 ml-2 text-green-600" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M719.8 651.8m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="#E73B37"></path><path d="M512.1 64H172v896h680V385.6L512.1 64z m278.8 324.3h-280v-265l280 265zM808 916H216V108h278.6l0.2 0.2v296.2h312.9l0.2 0.2V916z" fill="#39393A"></path><path d="M280.5 530h325.9v16H280.5z" fill="#39393A"></path><path d="M639.5 530h90.2v16h-90.2z" fill="#E73B37"></path><path d="M403.5 641.8h277v16h-277z" fill="#39393A"></path><path d="M280.6 641.8h91.2v16h-91.2z" fill="#E73B37"></path><path d="M279.9 753.7h326.5v16H279.9z" fill="#39393A"></path><path d="M655.8 753.7h73.9v16h-73.9z" fill="#E73B37"></path></g></svg>
+              رزومه: <a href="mailto:cv@darukade.com" class="text-green-700 hover:underline">cv@darukade.com</a>
+            </li>
+            <li class="flex items-center">
+              <svg class="w-6 h-6 ml-2 text-green-600" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M512 616.2m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="#E73B37"></path><path d="M511.6 656.9m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="#E73B37"></path><path d="M512.4 697.7m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="#E73B37"></path><path d="M512 130.8c42.1 0 81.7 16.4 111.5 46.2s46.2 69.4 46.2 111.5-16.4 81.7-46.2 111.5c-29.8 29.8-69.4 46.2-111.5 46.2s-81.7-16.4-111.5-46.2c-29.8-29.8-46.2-69.4-46.2-111.5s16.4-81.7 46.2-111.5 69.4-46.2 111.5-46.2m0-44c-111.4 0-201.6 90.3-201.6 201.6C310.4 399.8 400.7 490 512 490c111.4 0 201.6-90.3 201.6-201.6S623.3 86.8 512 86.8zM512.3 523.5L84 681.4v255.7h856V681.4L512.3 523.5zM896 893.1H128V712.6l384.3-142.4L896 712.6v180.5z" fill="#39393A"></path><path d="M555.4 585.3l-1.4-0.5v159.9c0 11.7-4.8 22.3-12.4 30-7.7 7.7-18.3 12.4-30 12.4-23.4 0-42.4-19-42.4-42.4V585.3l-1.4 0.5-14.6 5.2v153.8c0 32.2 26.2 58.4 58.4 58.4S570 777 570 744.8V590.5l-14.6-5.2z" fill="#E73B37"></path></g></svg>
+              مدیریت: <a href="mailto:manager@darukade.com" class="text-green-700 hover:underline">manager@darukade.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
