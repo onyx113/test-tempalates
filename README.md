@@ -1,1 +1,1 @@
-# test-tempalates
+# some tempelate i create with tailwind cdn
