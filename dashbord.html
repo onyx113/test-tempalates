@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="Fa-IR" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>داشبورد کاربری</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+
+    <style>
+          .hide-scroll {
+            scrollbar-width: 0;
+          }
+          .hide-scroll::-webkit-scrollbar {
+            display: none;
+          }
+    </style>
+
+</head>
+
+<body class="bg-slate-100 text-slate-800 hide-scroll font-Dana">
+    <svg class="hidden">
+        <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </symbol>
+        <symbol id="icon-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z" />
+        </symbol>
+        <symbol id="icon-orders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+        </symbol>
+        <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </symbol>
+        <symbol id="icon-address" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+        </symbol>
+        <symbol id="icon-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+        </symbol>
+        <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+        </symbol>
+    </svg>
+    <div class="relative min-h-screen md:flex" x-data="{ activeTab: 'dashboard', isSidebarOpen: false }" x-init="animateDashboard()">
+        <div @click="isSidebarOpen = false" x-show="isSidebarOpen" x-transition.opacity class="fixed inset-0 bg-black/50 z-30 md:hidden" x-cloak></div>
+        <aside class="w-64 bg-white shadow-lg flex-shrink-0 flex-col transition-transform duration-300 ease-in-out fixed inset-y-0 right-0 z-40 md:static md:translate-x-0 overflow-y-auto" :class="isSidebarOpen ? 'translate-x-0' : 'translate-x-full'">
+            <div class="p-6 border-b text-center">
+                <img src="src/images/assets/user.png" alt="آواتار کاربر" class="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-green-200" />
+                <h3 class="font-bold text-lg">محسن تولایی</h3>
+                <p class="text-slate-500 text-sm mt-1">۰۹۱۲۰۰۰۰۰۰۰</p>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a @click="activeTab = 'dashboard'; isSidebarOpen = false; $nextTick(() => animateDashboard())" :class="{ 'active': activeTab === 'dashboard' }" class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-slate-600 transition-all duration-200 ease-in-out cursor-pointer hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-green-100 [&.active]:text-green-700 [&.active_svg]:text-green-600">
+                    <svg class="w-5 h-5">
+                        <use href="#icon-dashboard"></use>
+                    </svg>
+                    <span>داشبورد</span>
+                </a>
+                <a @click="activeTab = 'orders'; isSidebarOpen = false; $nextTick(() => animateOrders())" :class="{ 'active': activeTab === 'orders' }" class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-slate-600 transition-all duration-200 ease-in-out cursor-pointer hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-green-100 [&.active]:text-green-700 [&.active_svg]:text-green-600">
+                    <svg class="w-5 h-5">
+                        <use href="#icon-orders"></use>
+                    </svg>
+                    <span>سفارش‌ها</span>
+                </a>
+                <a @click="activeTab = 'favorites'; isSidebarOpen = false; $nextTick(() => animateFavorites())" :class="{ 'active': activeTab === 'favorites' }" class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-slate-600 transition-all duration-200 ease-in-out cursor-pointer hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-green-100 [&.active]:text-green-700 [&.active_svg]:text-green-600">
+                    <svg class="w-5 h-5">
+                        <use href="#icon-heart"></use>
+                    </svg>
+                    <span>لیست ها</span>
+                </a>
+                <a @click="activeTab = 'addresses'; isSidebarOpen = false; $nextTick(() => animateAddresses())" :class="{ 'active': activeTab === 'addresses' }" class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-slate-600 transition-all duration-200 ease-in-out cursor-pointer hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-green-100 [&.active]:text-green-700 [&.active_svg]:text-green-600">
+                    <svg class="w-5 h-5">
+                        <use href="#icon-address"></use>
+                    </svg>
+                    <span>آدرس‌ها</span>
+                </a>
+                <a @click="activeTab = 'account'; isSidebarOpen = false; $nextTick(() => animateAccount())" :class="{ 'active': activeTab === 'account' }" class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-slate-600 transition-all duration-200 ease-in-out cursor-pointer hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-green-100 [&.active]:text-green-700 [&.active_svg]:text-green-600">
+                    <svg class="w-5 h-5">
+                        <use href="#icon-user"></use>
+                    </svg>
+                    <span>اطلاعات حساب</span>
+                </a>
+                <div class="!mt-auto">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-slate-600 transition-all duration-200 ease-in-out cursor-pointer hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-green-100 [&.active]:text-green-700 [&.active_svg]:text-green-600 text-red-500 hover:bg-red-50 !mt-8">
+                        <svg class="w-5 h-5 text-red-500">
+                            <use href="#icon-logout"></use>
+                        </svg>
+                        <span class="text-red-500 hover:text-zinc-500">خروج از حساب</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            <header class="flex justify-between items-center mb-8">
+                <button @click="isSidebarOpen = true" class="md:hidden p-2 rounded-md hover:bg-slate-200">
+                    <svg class="w-6 h-6">
+                        <use href="#icon-menu"></use>
+                    </svg>
+                </button>
+                <h1 class="sm:text-4xl text-2xl font-av" x-text="
+						activeTab === 'dashboard' ? 'داشبورد' :
+						activeTab === 'orders' ? 'تاریخچه سفارش‌ها' :
+						activeTab === 'favorites' ? 'لیست ها' :
+						activeTab === 'addresses' ? 'آدرس‌های شما' :
+						'اطلاعات حساب'
+						">
+            داشبورد
+          </h1>
+                <a href="index.html" class="text-green-700 hover:text-green-500 pb-10 sm:text-2xl text-sm font-av">صفحه اصلی >></a>
+            </header>
+            <div id="dashboard-content" x-show="activeTab === 'dashboard'" x-transition x-cloak>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-8">
+                    <div class="stat-card border-t-4 border-yellow-400">
+                        <h4 class="font-semibold text-slate-500">تکمیل شده</h4>
+                        <p class="text-3xl font-bold mt-2">۱۰ <span class="text-base font-medium">عدد</span></p>
+                    </div>
+                    <div class="stat-card border-t-4 border-blue-400">
+                        <h4 class="font-semibold text-slate-500">در انتظار بررسی</h4>
+                        <p class="text-3xl font-bold mt-2">۶ <span class="text-base font-medium">عدد</span></p>
+                    </div>
+                    <div class="stat-card border-t-4 border-red-400">
+                        <h4 class="font-semibold text-slate-500">لغو شده</h4>
+                        <p class="text-3xl font-bold mt-2">۴ <span class="text-base font-medium">عدد</span></p>
+                    </div>
+                    <div class="stat-card border-t-4 border-purple-400">
+                        <h4 class="font-semibold text-slate-500">منتظر پرداخت</h4>
+                        <p class="text-3xl font-bold mt-2">۲ <span class="text-base font-medium">عدد</span></p>
+                    </div>
+                    <div class="stat-card border-t-4 border-green-400">
+                        <h4 class="font-semibold text-slate-500">در حال انجام</h4>
+                        <p class="text-3xl font-bold mt-2">۱ <span class="text-base font-medium">عدد</span></p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold mb-4">سفارش‌های اخیر من</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right">
+                            <thead class="border-b-2 border-slate-100">
+                                <tr>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">نام محصول</th>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">تاریخ</th>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">قیمت</th>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-row border-b border-slate-100">
+                                    <td class="p-4 font-medium">قهوه ۲۵۰ گرمی بن مانو</td>
+                                    <td class="p-4 text-slate-600">۱۴۰۴/۱۱/۱۱</td>
+                                    <td class="p-4 text-slate-600">۵۴۲٬۰۰۰ تومان</td>
+                                    <td class="p-4"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700">لغو شده</span></td>
+                                </tr>
+                                <tr class="table-row border-b border-slate-100">
+                                    <td class="p-4 font-medium">قهوه ۷۰۰ گرمی بن مانو</td>
+                                    <td class="p-4 text-slate-600">۱۴۰۴/۱۱/۱۱</td>
+                                    <td class="p-4 text-slate-600">۷۹۰٬۰۰۰ تومان</td>
+                                    <td class="p-4"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-700">در انتظار پرداخت</span></td>
+                                </tr>
+                                <tr class="table-row border-b border-slate-100">
+                                    <td class="p-4 font-medium">قهوه ۷۵۰ گرمی بن مانو</td>
+                                    <td class="p-4 text-slate-600">۱۴۰۴/۱۱/۱۱</td>
+                                    <td class="p-4 text-slate-600">۷۹۲٬۰۰۰ تومان</td>
+                                    <td class="p-4"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">پرداخت شده</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="orders-content" x-show="activeTab === 'orders'" x-transition x-cloak>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right">
+                            <thead class="border-b-2 border-slate-100">
+                                <tr>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">شماره سفارش</th>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">تاریخ</th>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">مبلغ کل</th>
+                                    <th class="p-3 text-sm font-semibold text-slate-500">وضعیت</th>
+                                    <th class="p-3 text-sm font-semibold text-slate-500"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-row border-b border-slate-100">
+                                    <td class="p-4 font-medium">#12548</td>
+                                    <td class="p-4 text-slate-600">۱۴۰۴/۰۴/۲۱</td>
+                                    <td class="p-4 text-slate-600">۵۴۲٬۰۰۰ تومان</td>
+                                    <td class="p-4"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">تکمیل شده</span></td>
+                                    <td class="p-4">
+                                        <button class="text-green-600 font-semibold text-sm">مشاهده جزئیات</button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row border-b border-slate-100">
+                                    <td class="p-4 font-medium">#12512</td>
+                                    <td class="p-4 text-slate-600">۱۴۰۴/۰۴/۱۸</td>
+                                    <td class="p-4 text-slate-600">۱٬۲۰۰٬۰۰۰ تومان</td>
+                                    <td class="p-4"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">تکمیل شده</span></td>
+                                    <td class="p-4">
+                                        <button class="text-green-600 font-semibold text-sm">مشاهده جزئیات</button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row border-b border-slate-100">
+                                    <td class="p-4 font-medium">#12499</td>
+                                    <td class="p-4 text-slate-600">۱۴۰۴/۰۴/۱۵</td>
+                                    <td class="p-4 text-slate-600">۷۹۰٬۰۰۰ تومان</td>
+                                    <td class="p-4"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">در حال پردازش</span></td>
+                                    <td class="p-4">
+                                        <button class="text-green-600 font-semibold text-sm">مشاهده جزئیات</button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="p-4 font-medium">#12450</td>
+                                    <td class="p-4 text-slate-600">۱۴۰۴/۰۴/۰۲</td>
+                                    <td class="p-4 text-slate-600">۳۱۰٬۰۰۰ تومان</td>
+                                    <td class="p-4"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700">لغو شده</span></td>
+                                    <td class="p-4">
+                                        <button class="text-green-600 font-semibold text-sm">مشاهده جزئیات</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="favorites-content" x-show="activeTab === 'favorites'" x-transition x-cloak>
+                <div x-data="{ openTab: 2 }">
+                    <div class="flex gap-4 justify-center">
+                        <button :class="openTab === 2 ? 'bg-green-600 text-white' : ' text-gray-500 hover:bg-green-100 bg-gray-200  hover:text-green-700'" @click="openTab = 2" class="px-4 py-2 rounded-md transition-all duration-200">
+                            لیست علاقه‌مندی ها
+                        </button>
+                        <button :class="openTab === 1 ? 'bg-green-600 text-white' : ' text-gray-500 hover:bg-green-100 bg-gray-200 hover:text-green-700'" @click="openTab = 1" class="px-4 py-2 rounded-md transition-all duration-200">
+                            لیست‌ های دیگر
+                        </button>
+                    </div>
+
+                    <div x-show="openTab === 1" class="mt-4">
+                        <section class="flex justify-between items-center p-2 border-b border-black/20">
+                            <h3>لیستی از کالاهای دلخواه بسازید!</h3>
+
+
+
+                            <div x-data="{ open1: false }">
+                                <button class="bg-green-500 px-4 rounded-md p-2 text-white" @click="open1 = !open1">
+                                    افزودن لیست جدید
+                                </button>
+
+                                <!-- مودال -->
+                                <div x-show="open1" x-transition:enter="transition transform ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end=" opacity-100" x-transition:leave="transition transform ease-in duration-200" x-transition:leave-start=" opacity-100"
+                                x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                                    <div class="bg-white p-6 rounded-lg container max-w-md">
+                                        <h4 class="text-xl font-semibold mb-4">لیست جدید</h4>
+
+
+                                        <div class="mb-4">
+                                            <label for="listName" class="block text-sm font-medium text-gray-700">عنوان لیست:</label>
+                                            <input type="text" id="listName" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="نام لیست جدید" />
+                                        </div>
+
+
+                                        <div class="mb-4">
+                                            <label for="listDescription" class="block text-sm font-medium text-gray-700">توضیحات:</label>
+                                            <textarea id="listDescription" rows="4" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="توضیحات خود را وارد کنید..."></textarea>
+                                        </div>
+
+
+                                        <div class="flex justify-end gap-1">
+                                            <button @click="open1 = false" class="px-4 py-2 bg-gray-200 rounded-md">انصراف</button>
+                                            <button @click="open1 = false" class="px-4 py-2 bg-green-500 text-white rounded-md">تایید</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- لیست ها موز-->
+                        <section class="grid grid-cols-1 sm:grid-cols-2 mt-2 gap-2">
+                            <div class=" rounded-lg border border-gray-200 shadow-sm p-4">
+                                <!-- لیست خالی -->
+                                <div class="bg-blue-50 text-center text-sm text-purple-600 rounded-md p-2 flex items-center justify-center gap-2 h-20">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5V3h6v2M9 5h6" />
+                                    </svg>
+                                    <span>این لیست خالی است!</span>
+                                </div>
+
+                                <!-- پایین باکس -->
+                                <div class="flex justify-between items-center text-sm text-gray-500 mt-4">
+                                    <div class="flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12v.01M4 12a8 8 0 018-8 8 8 0 018 8m-4 4v4m-8-4v4m4-4a4 4 0 004-4H8a4 4 0 004 4z" />
+                                        </svg>
+                                        <span class="text-xs">۰ کالا</span>
+                                    </div>
+                                    <div class="text-black font-semibold">موزه‌ها</div>
+                                    <div class="text-xs text-red-400 font-bold ">حذف</div>
+                                </div>
+                            </div>
+
+                            <div class=" rounded-lg border border-gray-200 shadow-sm p-4">
+                                <!-- لیست خالی -->
+                                <div class="bg-blue-50 text-center text-sm text-purple-600 rounded-md p-2 flex items-center justify-center gap-2 h-20">
+                                    <div class="flex gap-1">
+                                        <img class="object-cover h-15 w-15" src="src/images/jelo.jpg" alt="jelo">
+                                        <img class="object-cover h-15 w-15" src="src/images/jelo.jpg" alt="jelo">
+                                        <img class="object-cover h-15 w-15" src="src/images/jelo.jpg" alt="jelo">
+                                    </div>
+                                </div>
+
+                                <!-- پایین باکس -->
+                                <div class="flex justify-between items-center text-sm text-gray-500 mt-4">
+                                    <div class="flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12v.01M4 12a8 8 0 018-8 8 8 0 018 8m-4 4v4m-8-4v4m4-4a4 4 0 004-4H8a4 4 0 004 4z" />
+                                        </svg>
+                                        <span class="text-xs">3 کالا</span>
+                                    </div>
+                                    <div class="text-black font-semibold">ژلوفن ها</div>
+                                    <div class="text-xs text-red-400 font-bold ">حذف</div>
+                                </div>
+                            </div>
+
+                        </section>
+                        <!-- پایان موز -->
+
+                    </div>
+                    <div x-show="openTab === 2" class="mt-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div class="fav-card border-green-700 bg-white rounded-xl shadow-md overflow-hidden">
+                                <img src="https://picsum.photos/id/1060/400/300" alt="محصول قهوه" class="w-full h-40 object-cover" />
+
+                                <div class="p-4">
+                                    <h4 class="font-bold">قهوه ترکیبی کلاسیک</h4>
+                                    <p class="text-slate-500 mt-1">۲۵۰٬۰۰۰ تومان</p>
+
+                                    <div class="flex items-center gap-2 mt-4">
+                                        <button class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition-colors flex justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <button class="flex-grow bg-green-500 text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-green-600 transition-colors">
+                                            مشاهده محصول
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="fav-card border-green-700 bg-white rounded-xl shadow-md overflow-hidden">
+                                <img src="https://picsum.photos/id/1060/400/300" alt="محصول قهوه" class="w-full h-40 object-cover" />
+
+                                <div class="p-4">
+                                    <h4 class="font-bold">قهوه ترکیبی کلاسیک</h4>
+                                    <p class="text-slate-500 mt-1">۲۵۰٬۰۰۰ تومان</p>
+
+                                    <div class="flex items-center gap-2 mt-4">
+                                        <button class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition-colors flex justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <button class="flex-grow bg-green-500 text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-green-600 transition-colors">
+                                            مشاهده محصول
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fav-card border-green-700 bg-white rounded-xl shadow-md overflow-hidden">
+                                <img src="https://picsum.photos/id/1060/400/300" alt="محصول قهوه" class="w-full h-40 object-cover" />
+
+                                <div class="p-4">
+                                    <h4 class="font-bold">قهوه ترکیبی کلاسیک</h4>
+                                    <p class="text-slate-500 mt-1">۲۵۰٬۰۰۰ تومان</p>
+
+                                    <div class="flex items-center gap-2 mt-4">
+                                        <button class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition-colors flex justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <button class="flex-grow bg-green-500 text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-green-600 transition-colors">
+                                            مشاهده محصول
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="" x-show="activeTab === 'addresses'" x-transition x-cloak>
+                <div class="text-right mb-6">
+                    <div x-data="{ isModalOpen: false }" class="">
+                        <button @click="isModalOpen = true" class="flex gap-2 px-4 py-2 text-white bg-green-600 rounded-lg shadow cursor-pointer">
+                            آدرس جدید
+                            <svg class="w-5 h-5">
+                                <use href="#icon-plus"></use>
+                            </svg>
+                        </button>
+                        <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0101019a]" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                            <div @click.away="isModalOpen = false" x-show="isModalOpen" x-transition class="relative flex flex-col w-full max-w-3xl bg-white rounded-lg shadow-xl max-h-[95vh]">
+                                <div class="flex items-center justify-between flex-shrink-0">
+                                    <h2 class="px-5 text-xl font-bold">افزودن آدرس</h2>
+
+                                    <button @click="isModalOpen = false" class="text-left text-gray-400 hover:text-gray-600 cursor-pointer p-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="p-5 space-y-2 overflow-y-auto hide-scroll">
+                                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                        <div x-data="{
+												isOpen: false,
+												value: '',
+												options: ['آذربایجان شرقی', 'آذربایجان غربی', 'اردبیل', 'اصفهان', 'البرز', 'ایلام', 'تهران'],
+												get filteredOptions() {
+												if (this.value === '') return this.options;
+												return this.options.filter(option => option.toLowerCase().includes(this.value.toLowerCase()));
+												},
+												selectOption(option) {
+												this.value = option;
+												this.isOpen = false;
+												}
+												}" @click.away="isOpen = false" class="relative">
+                                            <label for="province" class="block mb-2 text-sm font-medium text-gray-700">استان <span class="text-red-600">*</span></label>
+                                            <input type="text" id="province" x-model="value" @focus="isOpen = true" @input.debounce.300ms="isOpen = true" @keydown.escape.prevent="isOpen = false" @keydown.arrow-down.prevent="$event.target.nextElementSibling.querySelector('a').focus()" placeholder="استان را تایپ یا انتخاب کنید"
+                                            class="w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                            <div x-show="isOpen" x-transition class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-56 overflow-y-auto">
+                                                <template x-for="option in filteredOptions" :key="option">
+                                                    <a @click.prevent="selectOption(option)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" x-text="option"></a>
+                                                </template>
+                                                <template x-if="filteredOptions.length === 0">
+                                                    <div class="px-4 py-2 text-sm text-gray-500">موردی یافت نشد</div>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <div x-data="{
+												isOpen: false,
+												value: '',
+												options: ['آذربایجان شرقی', 'آذربایجان غربی', 'اردبیل', 'اصفهان', 'البرز', 'ایلام', 'تهران'],
+												get filteredOptions() {
+												if (this.value === '') return this.options;
+												return this.options.filter(option => option.toLowerCase().includes(this.value.toLowerCase()));
+												},
+												selectOption(option) {
+												this.value = option;
+												this.isOpen = false;
+												}
+												}" @click.away="isOpen = false" class="relative">
+                                            <label for="province" class="block mb-2 text-sm font-medium text-gray-700">شهر<span class="text-red-600">*</span></label>
+                                            <input type="text" id="province" x-model="value" @focus="isOpen = true" @input.debounce.300ms="isOpen = true" @keydown.escape.prevent="isOpen = false" @keydown.arrow-down.prevent="$event.target.nextElementSibling.querySelector('a').focus()" placeholder="استان را تایپ یا انتخاب کنید"
+                                            class="w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                            <div x-show="isOpen" x-transition class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-56 overflow-y-auto">
+                                                <template x-for="option in filteredOptions" :key="option">
+                                                    <a @click.prevent="selectOption(option)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" x-text="option"></a>
+                                                </template>
+                                                <template x-if="filteredOptions.length === 0">
+                                                    <div class="px-4 py-2 text-sm text-gray-500">موردی یافت نشد</div>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="full-address" class="block mb-2 text-sm font-medium text-gray-700">آدرس پستی <span class="text-red-600">*</span></label>
+                                        <textarea id="full-address" rows="4" class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"></textarea>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                        <div>
+                                            <label for="plaque" class="block mb-2 text-sm font-medium text-gray-700">پلاک <span class="text-red-600">*</span></label>
+                                            <input type="text" id="plaque" class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                        </div>
+                                        <div>
+                                            <label for="unit" class="block mb-2 text-sm font-medium text-gray-700">واحد</label>
+                                            <input type="text" id="unit" class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="postal-code" class="block mb-2 text-sm font-medium text-gray-700">کدپستی <span class="text-red-600">*</span></label>
+                                        <input type="text" id="postal-code" maxlength="10" class="w-full px-3 py-2 text-gray-700 tracking-widest text-right border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" placeholder="----------"
+                                        />
+                                        <p class="mt-1 text-xs text-gray-500">باید ۱۰ رقمی باشد.</p>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 px-6 py-4 bg-gray-50 rounded-b-lg">
+                                    <button class="w-full px-4 py-3 font-bold text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                        تایید و ادامه
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="address-card bg-white p-6 rounded-xl shadow-md content-between grid">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg">آدرس منزل</h4>
+                                <p class="text-slate-600 mt-2 leading-relaxed">تهران، خیابان ولیعصر، نرسیده به میدان تجریش، کوچه ...، پلاک ۱۲، واحد ۴</p>
+                                <p class="mt-2 text-sm text-slate-500">کد پستی: ۱۹۱۲۳۴۵۶۷۸</p>
+                            </div>
+                            <span class="text-xs font-bold bg-green-100 text-green-700 px-3 py-1 rounded-full">پیش‌فرض</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t justify-end flex gap-x-2">
+                            <div x-data="{ isModalOpen: false }" class="">
+                                <button @click="isModalOpen = true" class="text-sm font-semibold text-blue-600">
+                                    ویرایش
+                                </button>
+                                <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0101019a]" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                    <div @click.away="isModalOpen = false" x-show="isModalOpen" x-transition class="relative flex flex-col w-full max-w-3xl bg-white rounded-lg shadow-xl max-h-[95vh]">
+                                        <div class="flex items-center justify-between flex-shrink-0">
+                                            <h2 class="px-5 text-xl font-bold">ویرایش آدرس</h2>
+
+                                            <button @click="isModalOpen = false" class="text-left text-gray-400 hover:text-gray-600 cursor-pointer p-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="p-5 space-y-2 overflow-y-auto hide-scroll">
+                                            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                                <div x-data="{
+														isOpen: false,
+														value: '',
+														options: ['آذربایجان شرقی', 'آذربایجان غربی', 'اردبیل', 'اصفهان', 'البرز', 'ایلام', 'تهران'],
+														get filteredOptions() {
+														if (this.value === '') return this.options;
+														return this.options.filter(option => option.toLowerCase().includes(this.value.toLowerCase()));
+														},
+														selectOption(option) {
+														this.value = option;
+														this.isOpen = false;
+														}
+														}" @click.away="isOpen = false" class="relative">
+                                                    <label for="province" class="block mb-2 text-sm font-medium text-gray-700">استان <span class="text-red-600">*</span></label>
+                                                    <input type="text" id="province" x-model="value" @focus="isOpen = true" @input.debounce.300ms="isOpen = true" @keydown.escape.prevent="isOpen = false" @keydown.arrow-down.prevent="$event.target.nextElementSibling.querySelector('a').focus()" placeholder="استان را تایپ یا انتخاب کنید"
+                                                    class="w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                                    <div x-show="isOpen" x-transition class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-56 overflow-y-auto">
+                                                        <template x-for="option in filteredOptions" :key="option">
+                                                            <a @click.prevent="selectOption(option)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" x-text="option"></a>
+                                                        </template>
+                                                        <template x-if="filteredOptions.length === 0">
+                                                            <div class="px-4 py-2 text-sm text-gray-500">موردی یافت نشد</div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                                <div x-data="{
+														isOpen: false,
+														value: '',
+														options: ['آذربایجان شرقی', 'آذربایجان غربی', 'اردبیل', 'اصفهان', 'البرز', 'ایلام', 'تهران'],
+														get filteredOptions() {
+														if (this.value === '') return this.options;
+														return this.options.filter(option => option.toLowerCase().includes(this.value.toLowerCase()));
+														},
+														selectOption(option) {
+														this.value = option;
+														this.isOpen = false;
+														}
+														}" @click.away="isOpen = false" class="relative">
+                                                    <label for="province" class="block mb-2 text-sm font-medium text-gray-700">شهر<span class="text-red-600">*</span></label>
+                                                    <input type="text" id="province" x-model="value" @focus="isOpen = true" @input.debounce.300ms="isOpen = true" @keydown.escape.prevent="isOpen = false" @keydown.arrow-down.prevent="$event.target.nextElementSibling.querySelector('a').focus()" placeholder="استان را تایپ یا انتخاب کنید"
+                                                    class="w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                                    <div x-show="isOpen" x-transition class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-56 overflow-y-auto">
+                                                        <template x-for="option in filteredOptions" :key="option">
+                                                            <a @click.prevent="selectOption(option)" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" x-text="option"></a>
+                                                        </template>
+                                                        <template x-if="filteredOptions.length === 0">
+                                                            <div class="px-4 py-2 text-sm text-gray-500">موردی یافت نشد</div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label for="full-address" class="block mb-2 text-sm font-medium text-gray-700">آدرس پستی <span class="text-red-600">*</span></label>
+                                                <textarea id="full-address" rows="4" class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"></textarea>
+                                            </div>
+                                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                                <div>
+                                                    <label for="plaque" class="block mb-2 text-sm font-medium text-gray-700">پلاک <span class="text-red-600">*</span></label>
+                                                    <input type="text" id="plaque" class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                                </div>
+                                                <div>
+                                                    <label for="unit" class="block mb-2 text-sm font-medium text-gray-700">واحد</label>
+                                                    <input type="text" id="unit" class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label for="postal-code" class="block mb-2 text-sm font-medium text-gray-700">کدپستی <span class="text-red-600">*</span></label>
+                                                <input type="text" id="postal-code" maxlength="10" class="w-full px-3 py-2 text-gray-700 tracking-widest text-right border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500" placeholder="----------"
+                                                />
+                                                <p class="mt-1 text-xs text-gray-500">باید ۱۰ رقمی باشد.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex-shrink-0 px-6 py-4 bg-gray-50 rounded-b-lg">
+                                            <button class="w-full px-4 py-3 font-bold text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                                تایید و ادامه
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="text-sm font-semibold text-red-600">حذف</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="account-content" x-show="activeTab === 'account'" x-transition x-cloak>
+                <form class="account-form bg-white p-8 rounded-xl shadow-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div class="form-field-group">
+                            <label for="full_name" class="block text-sm font-semibold text-slate-700 mb-2">نام و نام خانوادگی</label>
+                            <input type="text" id="full_name" value="محسن تولایی" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" />
+                        </div>
+                        <div class="form-field-group">
+                            <label for="username" class="block text-sm font-semibold text-slate-700 mb-2">نام کاربری</label>
+                            <input type="text" id="username" value="onyx" class="w-full p-3 border text-left border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" />
+                        </div>
+                        <div class="form-field-group">
+                            <label for="mobile" class="block text-sm font-semibold text-slate-700 mb-2">شماره موبایل</label>
+                            <input type="tel" id="mobile" value="۰۹۳۷۸۱۸۳۴۷۴" class="w-full text-right p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" dir="ltr" />
+                        </div>
+                        <div class="form-field-group">
+                            <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">ایمیل</label>
+                            <input type="email" id="email" value="mohsen@gmail.com" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-left" dir="ltr" />
+                        </div>
+                        <div class="form-field-group">
+                            <label for="birthdate" class="block text-sm font-semibold text-slate-700 mb-2">تاریخ تولد</label>
+                            <input type="text" id="birthdate" value="۱۳۸۴/۷/۱۲" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" />
+                        </div>
+                        <div class="form-field-group">
+                            <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">رمز عبور</label>
+                            <input type="password" id="password" value="••••••••" class="w-full p-3 border text-left border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" />
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-slate-200 flex justify-end">
+                        <button type="submit" class="bg-green-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300">ثبت اطلاعات</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function animateDashboard() {
+            const targets = "#dashboard-content .stat-card";
+            // ۱. انیمیشن‌های قبلی را متوقف کن
+            gsap.killTweensOf(targets);
+            // ۲. حالت اولیه را تنظیم کن
+            gsap.set(targets, { y: 80, opacity: 0 });
+            // ۳. به حالت نهایی انیمیت کن
+            gsap.to(targets, {
+              duration: 0.5,
+              y: 0,
+              opacity: 1,
+              stagger: 0.2,
+              ease: "power2.out",
+            });
+          }
+    
+          function animateOrders() {
+            const targets = "#orders-content .table-row";
+            gsap.killTweensOf(targets);
+            gsap.set(targets, { x: -30, opacity: 0 });
+            gsap.to(targets, {
+              duration: 0.5,
+              x: 0,
+              opacity: 1,
+              stagger: 0.1,
+              ease: "power2.out",
+            });
+          }
+    
+          function animateFavorites() {
+            const targets = "#favorites-content .fav-card";
+            gsap.killTweensOf(targets);
+            gsap.set(targets, { scale: 0.9, opacity: 0 });
+            gsap.to(targets, {
+              duration: 0.5,
+              scale: 1,
+              opacity: 1,
+              stagger: 0.1,
+              ease: "power2.out",
+            });
+          }
+    
+          function animateAddresses() {
+            const targets = "#addresses-content .address-card";
+            gsap.killTweensOf(targets);
+            gsap.set(targets, { y: 30, opacity: 0 });
+            gsap.to(targets, {
+              duration: 0.5,
+              y: 0,
+              opacity: 1,
+              stagger: 0.1,
+              ease: "power2.out",
+            });
+          }
+    
+          function animateAccount() {
+            const targets = "#account-content .form-field-group";
+            gsap.killTweensOf(targets);
+            gsap.set(targets, { x: -30, opacity: 0 });
+            gsap.to(targets, {
+              duration: 0.5,
+              x: 0,
+              opacity: 1,
+              stagger: 0.1,
+              ease: "power2.out",
+            });
+          }
+    </script>
+</body>
+
+</html>
